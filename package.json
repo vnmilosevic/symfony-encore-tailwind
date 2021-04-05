@@ -17,7 +17,7 @@
     "scripts": {
         "dev-server": "encore dev-server",
         "dev": "encore dev",
-        "watch": "encore dev --watch",
+        "watch": "NODE_ENV=development encore dev --watch",
         "build": "encore production --progress"
     },
     "browserslist": [
