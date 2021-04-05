@@ -89,20 +89,10 @@ Encore
             cert: homedir + '/.config/valet/Certificates/' + domain + '.crt',
         },
         files: [
-            {
-                match: [
-                    './assets/**/*.*',
-                    './public/**/*.*',
-                    './src/**/*.php',
-                    './templates/**/*.twig',
-                ],
-                fn: function (event, file) {
-                    if (event === 'change') {
-                        const bs = require('browser-sync').get('bs-webpack-plugin');
-                        bs.reload();
-                    }
-                }
-            }
+            './assets/**/*.*',
+            './public/**/*.*',
+            './src/**/*.php',
+            './templates/**/*.twig'
         ]
     }))
 ;
