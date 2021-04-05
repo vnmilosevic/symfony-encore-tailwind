@@ -1,5 +1,7 @@
 const Encore = require('@symfony/webpack-encore');
-const options = require("tailwindcss");
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const domain = 'symfony-encore-tailwind.test';
+const homedir = require('os').homedir();
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -35,11 +37,7 @@ Encore
     .enableSingleRuntimeChunk()
 
     // Enable PostCSS support
-    .enablePostCssLoader((options) => {
-        options.postcssOptions = {
-            config: 'postcss.config.js',
-        };
-    })
+    .enablePostCssLoader()
     
     /*
      * FEATURE CONFIG
@@ -79,6 +77,24 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    // Browsersync
+    .addPlugin( new BrowserSyncPlugin({
+        proxy: 'https://' + domain,
+        host: domain,
+        notify: false,
+        open: 'external',
+        https: {
+            key: homedir + '/.config/valet/Certificates/' + domain + '.key',
+            cert: homedir + '/.config/valet/Certificates/' + domain + '.crt',
+        },
+        files: [
+            'assets/**/*.*',
+            'public/**/*.*',
+            'src/**/*.php',
+            'templates/**/*.twig',
+        ]
+    }))
 ;
 
 module.exports = Encore.getWebpackConfig();
